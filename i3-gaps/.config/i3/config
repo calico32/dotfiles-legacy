@@ -111,6 +111,7 @@ bindsym $mod+Return exec gnome-terminal
 
 bindsym $mod+d exec --no-startup-id "rofi -show combi"
 bindsym $mod+Shift+d exec --no-startup-id "rofi -show drun -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
+bindsym $mod+Mod1+d exec --no-startup-id "rofi-emoji"
 
 
 
@@ -261,8 +262,9 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 # Start picom
 exec --no-startup-id picom -b
 
-# Start Pulseaudio
+# Start Pulseaudio and effects
 exec --no-startup-id '/usr/bin/pulseaudio --start'
+exec -- pulseeffects --gapplication-service
 
 # Start mpd
 exec --no-startup-id mpd
