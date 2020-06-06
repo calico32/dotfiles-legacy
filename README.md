@@ -37,7 +37,7 @@ sudo apt install libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev \
 ```zsh
 # normal things
 sudo apt install zsh rofi stow pulseeffects lsp-plugins cantata mpd \
-  mpc qt5-style-plugins flameshot feh xclop vim ubuntu-make nethogs \
+  mpc qt5-style-plugins flameshot feh xclip vim ubuntu-make nethogs \
   gnome-tweaks tmux lsyncd dconf-editor fonts-firacode fonts-powerline \
   sl
 
