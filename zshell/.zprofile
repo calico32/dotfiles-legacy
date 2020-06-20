@@ -10,6 +10,7 @@ path=(
   "/usr/local/go/bin"
   $path
 )
+
 export PATH
 
 # Use GTK theme for Qt5 applications
