@@ -3,6 +3,8 @@ ICON=$HOME/.config/i3/lock-icon.png
 TMPBG=/tmp/screen.png
 TMPICON=/tmp/lock-icon.png
 
+sleep 1
+
 cp $ICON $TMPICON
 convert $TMPICON -scale 60% $TMPICON
 
