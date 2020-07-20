@@ -55,7 +55,7 @@ bindsym --release button2 kill
 
 # initial gaps
 gaps inner 15
-# gaps bottom 52
+gaps bottom 28
 
 # gap adjustment
 bindsym $mod+minus gaps inner all plus 5
@@ -64,8 +64,8 @@ bindsym $mod+Shift+minus gaps outer all plus 5
 bindsym $mod+Shift+equal gaps outer all minus 5
 
 # show/hide polybar
-# bindsym $mod+Shift+p exec "polybar-msg cmd hide" gaps bottom all set 0
-# bindsym $mod+p exec "polybar-msg cmd show" gaps bottom all set 52
+bindsym $mod+Shift+p exec "polybar-msg cmd hide" gaps bottom all set 0
+bindsym $mod+p exec "polybar-msg cmd show" gaps bottom all set 28
 
 
 
@@ -81,7 +81,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86AudioPlay exec mpc toggle
 bindsym XF86AudioNext exec mpc next
 bindsym XF86AudioPrev exec mpc prev
-bindsym Print exec flameshot gui
+bindsym Print exec --no-startup-id "zsh -c \\"/usr/bin/flameshot gui\\""
 
 # airplane mode (f12)
 bindsym XF86RFKill exec -- bash -e "rfkill list | grep -q '\byes\b' && rfkill unblock all || rfkill block all"
@@ -107,11 +107,16 @@ bindsym $mod+Shift+q kill
 # programs #
 ############
 
-bindsym $mod+Return exec "dbus-launch gnome-terminal"
+bindsym $mod+Return exec "gnome-terminal"
 
-bindsym $mod+d exec --no-startup-id "rofi -show combi"
-bindsym $mod+Shift+d exec --no-startup-id "rofi -show drun -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
-bindsym $mod+Mod1+d exec --no-startup-id "rofi-emoji"
+set $rofitheme -theme Pop-Dark -padding 5 -bw 0 -show-icons true -hide-scrollbar true -font \\"Fira Code 12\\"
+
+bindsym $mod+d exec --no-startup-id "rofi -show combi -modi \\"drun,ssh,combi\\" -combi-modi \\"drun,ssh\\" -display-combi \\"rofi\\" -combi-display-format \\"{name}\\" $rofitheme"
+
+
+bindsym $mod+Shift+d exec --no-startup-id "rofi -show drun -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"' -lines 0 -display-drun \\"exec\\" $rofitheme"
+
+bindsym $mod+Mod1+d exec --no-startup-id "rofi -show emoji -modi emoji $rofitheme"
 
 
 
@@ -261,14 +266,16 @@ bindsym $mod+r mode "resize"
 exec $HOME/.fehbg
 
 # Start polybar
-# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Start picom
 exec --no-startup-id picom -b
 
 # Start Pulseaudio and effects
 exec --no-startup-id '/usr/bin/pulseaudio --start'
-exec -- pulseeffects --gapplication-service
+exec --no-startup-id pulseeffects --gapplication-service
+
+exec flameshot
 
 # Start mpd
 exec --no-startup-id mpd
@@ -276,16 +283,16 @@ exec --no-startup-id mpd
 
 # Do GNOME things
 exec --no-startup-id /usr/lib/gsd-xsettings
-exec_always --no-startup-id gnome-power-manager
+# exec_always --no-startup-id gnome-power-manager
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # exec --no-startup-id gnome-flashback
-exec --no-startup-id /usr/bin/gnome-screensaver
+# exec --no-startup-id /usr/bin/gnome-screensaver
 
-# exec --no-startup-id dbus-send \
-#     --session \
-#     --print-reply=literal \
-#     --dest=org.gnome.SessionManager \
-#     "/org/gnome/SessionManager" \
-#     org.gnome.SessionManager.RegisterClient \
-#     "string:i3" \
-#     "string:$DESKTOP_AUTOSTART_ID"
+exec --no-startup-id dbus-send \
+    --session \
+    --print-reply=literal \
+    --dest=org.gnome.SessionManager \
+    "/org/gnome/SessionManager" \
+    org.gnome.SessionManager.RegisterClient \
+    "string:i3" \
+    "string:$DESKTOP_AUTOSTART_ID"

@@ -1,10 +1,29 @@
-# PATH in .zprofile
+# colors
+bold=$(tput bold)
+normal=$(tput sgr0)
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+yellow=$(tput setaf 3)
+blue=$(tput setaf 4)
+
+path=(
+  "$HOME/.local/bin"
+  "$HOME/.flutter-sdk/bin"
+  "$HOME/.android/sdk/platform-tools"
+  "$HOME/.local/share/umake/bin"
+  "$HOME/.go/bin"
+  "/usr/local/go/bin"
+  $path
+)
+
+
+# export QT_QPA_PLATFORM=minimal
+export QT_QPA_PLATFORMTHEME=gtk2
+
+export PATH
 
 # Android SDK location
 export ANDROID_HOME="$HOME/.android-sdk"
-
-# ADB path
-#export ADB="/usr/lib/android-sdk/platform-tools/adb"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -23,16 +42,18 @@ plugins=(
   zsh-syntax-highlighting
 )
 
+ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# Development folder
 hash -d d=$HOME/dev
 hash -d conf=$HOME/.config
-hash -d localbin=$HOME/.local/bin
-hash -d localshare=$HOME/.local/share
-hash -d aur=$HOME/downloads/programs/aur
+hash -d lbin=$HOME/.local/bin
+hash -d lshare=$HOME/.local/share
+
+aur=$HOME/downloads/programs/aur
+hash -d aur=$aur
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -51,15 +72,50 @@ alias ptc="picom-trans -c"
 alias pt="picom-trans"
 alias setbg="feh --bg-fill"
 alias nautilus="nautilus --no-desktop"
-alias files="io.elementary.files"
 
 if {tty | grep tty 1>/dev/null 2>&1}; then setfont /usr/share/kbd/consolefonts/ter-v16n.psf.gz; fi
 
-# Hide context
-prompt_context() {
-  # if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    # prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
-  # fi
+# mkdir and cd at the same time
+mkcd () {
+  mkdir -p -- "$1" && cd -P -- "$1"
+}
+
+brightness () {
+  xrandr --output $(xrandr | grep " connected" | cut -f1 -d " ") --brightness $1
+}
+
+gogh () {
+  bash -c "$(wget -qO- https://git.io/vQgMr)"
+}
+
+pacs () {
+  sudo pacman -S "$@"
+}
+
+aurdl () {
+  pushd $aur > /dev/null
+  if [[ -d $1 ]]; then
+    response=$(bash -c "read -n1 -rp \"${yellow}${bold}Directory $1 already exists in $aur, remove it? [Y/n] ${normal}\" c; echo \$c")
+    echo
+    response=${response:l} # tolower
+    if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
+      rm -rf $1
+    else
+      echop "${red}${bold}Cannot continue. Exiting.${normal}"
+      return 1
+    fi
+  fi
+  echo "${blue}${bold}Cloning $1...${normal}"
+  git clone "https://aur.archlinux.org/$1.git"
+  if [[ $? -eq 0 ]]; then
+    pushd $1 > /dev/null
+    echo "${blue}${bold}Running makepkg -si...${normal}"
+    makepkg -si
+    popd > /dev/null
+  else
+    echo "${red}${bold}Problem cloning $1, see above.${normal}"
+  fi
+  popd > /dev/null
 }
 
 # Custom colors
@@ -70,13 +126,9 @@ ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=green"
 ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=green"
 
 # Reload GTK theme
-function reload-gtk-theme() {
+reload-gtk-theme () {
   theme=$(gsettings get org.gnome.desktop.interface gtk-theme)
   gsettings set org.gnome.desktop.interface gtk-theme ''
   sleep 1
   gsettings set org.gnome.desktop.interface gtk-theme $theme
 }
-
-# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-# export SDKMAN_DIR="/home/wiisportsresorts/.sdkman"
-# [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

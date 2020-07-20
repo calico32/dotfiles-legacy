@@ -11,9 +11,9 @@ C=$fg_no_bold[cyan]
 RESET=$reset_color
 
 if [ "$USER" = "root" ]; then
-    PROMPTCOLOR="%{$R%}" PROMPTPREFIX=" ";
+    PROMPTCOLOR="" PROMPTPREFIX="" PROMPTCHAR="%{$R%}%B#%{$RESET%}";
 else
-    PROMPTCOLOR="" PROMPTPREFIX=" ";
+    PROMPTCOLOR="" PROMPTPREFIX="" PROMPTCHAR="%{$B%}%B%%%{$RESET%}";
 fi
 
 local return_code="%(?..%{$R%}%? ↵%{$RESET%})"
@@ -74,7 +74,7 @@ function custom_git_prompt() {
 
 # ⬡ ◈
 # %B sets bold text
-PROMPT='%B$PROMPTPREFIX%~$(custom_git_prompt)%{$B%}%B⬡%b%{$RESET%} '
+PROMPT='%B$PROMPTPREFIX%~$(custom_git_prompt)$PROMPTCHAR '
 RPS1="${return_code}"
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$G%}〈"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$G%}〉%{$RESET%}"
