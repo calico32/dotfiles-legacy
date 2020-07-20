@@ -51,6 +51,7 @@ hash -d d=$HOME/dev
 hash -d conf=$HOME/.config
 hash -d lbin=$HOME/.local/bin
 hash -d lshare=$HOME/.local/share
+hash -d df=$HOME/.dotfiles
 
 aur=$HOME/downloads/programs/aur
 hash -d aur=$aur
