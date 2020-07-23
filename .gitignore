@@ -1,3 +1,4 @@
 gtk/.config/gtk-3.0/bookmarks
 gtk/.config/gtk-3.0/servers
 zshell/.oh-my-zsh/custom/plugins
+polybar/.config/polybar/logs/*.log
