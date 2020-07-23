@@ -11,11 +11,13 @@ cyan=$fg_no_bold[cyan]
 # ====================================================================
 # env
 
+typeset -U path
+
 path=(
+  "$HOME/.bin"
   "$HOME/.local/bin"
   "$HOME/.flutter-sdk/bin"
   "$HOME/.android/sdk/platform-tools"
-  "$HOME/.local/share/umake/bin"
   "$HOME/.go/bin"
   "/usr/local/go/bin"
   $path
@@ -23,13 +25,11 @@ path=(
 
 export PATH
 
-
-# export QT_QPA_PLATFORM=minimal
-export QT_QPA_PLATFORMTHEME=gtk2
 export ANDROID_HOME="$HOME/.android-sdk"
 export GOPATH="$HOME/.go"
 
 # terminus font if on VT
+# better to add to /etc/mkinitcpio.conf though
 #if {tty | grep tty 1>/dev/null 2>&1}; then setfont /usr/share/kbd/consolefonts/ter-v16n.psf.gz; fi
 
 # ====================================================================
