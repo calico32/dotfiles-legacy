@@ -1,10 +1,12 @@
 # colors
 bold=$(tput bold)
 normal=$(tput sgr0)
-red=$(tput setaf 1)
-green=$(tput setaf 2)
-yellow=$(tput setaf 3)
-blue=$(tput setaf 4)
+red=$fg_no_bold[red]
+green=$fg_no_bold[green]
+magenta=$fg_no_bold[magenta]
+yellow=$fg_no_bold[yellow]
+blue=$fg_no_bold[blue]
+cyan=$fg_no_bold[cyan]
 
 # ====================================================================
 # env
@@ -68,7 +70,7 @@ hash -d lbin=$HOME/.local/bin
 hash -d lshare=$HOME/.local/share
 hash -d df=$HOME/.dotfiles
 
-aur=$HOME/downloads/programs/aur
+aur=$HOME/downloads/aur
 hash -d aur=$aur
 
 alias ffdev="firefox-developer-edition"
