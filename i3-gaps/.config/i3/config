@@ -1,13 +1,8 @@
-# # # # # # # # # # # # # # # # # # # #
-#                                     #
-#            i3 config                #
-#        by wiisportsresort           #
-#                                     #
-#        for use with i3-gaps         #
-#            and picom                #
-#                                     #
-# # # # # # # # # # # # # # # # # # # #
-
+#
+#
+# for use with i3-gaps
+#
+#
 
 # Super key
 set $mod Mod4
