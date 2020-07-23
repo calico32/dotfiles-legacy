@@ -9,7 +9,8 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 0.5; done
 
 # Logfile
-logfile="$HOME/.config/polybar/logs/log-$(date \"+%Y-%m-%d_%H:%M:%S\").log"
+date=$(date "+%Y-%m-%d_%H:%M:%S")
+logfile="$HOME/.config/polybar/logs/log-$date.log"
 
 # Launch bar1 and bar2
-polybar main -c ~/.config/polybar/main.ini -l info > "$logfile" 2>&1 &
+polybar main -c ~/.config/polybar/main.ini > "$logfile" 2>&1 &
