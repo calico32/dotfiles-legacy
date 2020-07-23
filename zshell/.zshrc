@@ -6,6 +6,9 @@ green=$(tput setaf 2)
 yellow=$(tput setaf 3)
 blue=$(tput setaf 4)
 
+# ====================================================================
+# env
+
 path=(
   "$HOME/.local/bin"
   "$HOME/.flutter-sdk/bin"
@@ -16,22 +19,23 @@ path=(
   $path
 )
 
+export PATH
+
 
 # export QT_QPA_PLATFORM=minimal
 export QT_QPA_PLATFORMTHEME=gtk2
-
-export PATH
-
-# Android SDK location
 export ANDROID_HOME="$HOME/.android-sdk"
+export GOPATH="$HOME/.go"
 
-# Path to your oh-my-zsh installation.
+# terminus font if on VT
+#if {tty | grep tty 1>/dev/null 2>&1}; then setfont /usr/share/kbd/consolefonts/ter-v16n.psf.gz; fi
+
+# ====================================================================
+# ohmyzsh
+
 export ZSH="$HOME/.oh-my-zsh"
 
-# Theme (in $ZSH_CUSTOM)
 ZSH_THEME="wiisportsresorts"
-
-# Display red dots whilst waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(
@@ -45,7 +49,18 @@ plugins=(
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# ====================================================================
+# plugin config
+
+# Custom colors
+typeset -A ZSH_HIGHLIGHT_STYLES
+
+ZSH_HIGHLIGHT_STYLES[arg0]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=green"
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=green"
+
+# ====================================================================
+# aliases/folders
 
 hash -d d=$HOME/dev
 hash -d conf=$HOME/.config
@@ -56,25 +71,16 @@ hash -d df=$HOME/.dotfiles
 aur=$HOME/downloads/programs/aur
 hash -d aur=$aur
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-#alias firefox-developer="$HOME/.local/share/firefox-dev/firefox"
-#alias ffdev="$HOME/.local/share/firefox-dev/firefox"
+alias ffdev="firefox-developer-edition"
 alias vsc="code-insiders"
 alias copy="xclip -selection c"
-#alias zshrc="code-insiders $HOME/.zshrc"
 alias ptc="picom-trans -c"
 alias pt="picom-trans"
 alias setbg="feh --bg-fill"
 alias nautilus="nautilus --no-desktop"
 
-if {tty | grep tty 1>/dev/null 2>&1}; then setfont /usr/share/kbd/consolefonts/ter-v16n.psf.gz; fi
+# ====================================================================
+# functions
 
 # mkdir and cd at the same time
 mkcd () {
@@ -93,6 +99,16 @@ pacs () {
   sudo pacman -S "$@"
 }
 
+pacr () {
+  sudo pacman -R "$@"
+}
+
+# sometimes clearing this stops 403 for mpsyt
+mpsyt-clear-cache () {
+  rm "$HOME/.config/mps-youtube/cache_py_3.*"
+}
+
+# clone and install a package from the AUR
 aurdl () {
   pushd $aur > /dev/null
   if [[ -d $1 ]]; then
@@ -119,14 +135,6 @@ aurdl () {
   popd > /dev/null
 }
 
-# Custom colors
-typeset -A ZSH_HIGHLIGHT_STYLES
-
-ZSH_HIGHLIGHT_STYLES[arg0]='fg=blue'
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=green"
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=green"
-
-# Reload GTK theme
 reload-gtk-theme () {
   theme=$(gsettings get org.gnome.desktop.interface gtk-theme)
   gsettings set org.gnome.desktop.interface gtk-theme ''
