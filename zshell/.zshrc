@@ -15,6 +15,7 @@ typeset -U path
 
 path=(
   "$HOME/.bin"
+  "node_modules/.bin"
   "$HOME/.local/bin"
   "$HOME/.flutter-sdk/bin"
   "$HOME/.android/sdk/platform-tools"
@@ -69,6 +70,7 @@ hash -d conf=$HOME/.config
 hash -d lbin=$HOME/.local/bin
 hash -d lshare=$HOME/.local/share
 hash -d df=$HOME/.dotfiles
+hash -d dl=$HOME/downloads
 
 aur=$HOME/downloads/aur
 hash -d aur=$aur
