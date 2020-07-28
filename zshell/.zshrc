@@ -71,7 +71,7 @@ hash -d lshare=$HOME/.local/share
 hash -d df=$HOME/.dotfiles
 hash -d dl=$HOME/downloads
 hash -d ubin=/usr/bin
-hash -d ushare/usr/share
+hash -d ushare=/usr/share
 
 aur=$HOME/downloads/aur
 hash -d aur=$aur
