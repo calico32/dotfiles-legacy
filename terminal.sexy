@@ -1,0 +1,39 @@
+! xresources format
+! import at https://terminal.sexy to get themes for gnome-terminal, guake, etc.
+
+! special
+*.foreground:   #e3d7d7
+*.background:   #222222
+*.cursorColor:  #e3d7d7
+
+! black
+*.color0:       #353535
+*.color8:       #787878
+
+! red
+*.color1:       #d25252
+*.color9:       #ff3131
+
+! green
+*.color2:       #a5c261
+*.color10:      #d5ff68
+
+! yellow
+*.color3:       #ffc66d
+*.color11:      #ffe34c
+
+! blue
+*.color4:       #6c99bb
+*.color12:      #4094d4
+
+! magenta
+*.color5:       #d197d9
+*.color13:      #e475f3
+
+! cyan
+*.color6:       #6ad5ff
+*.color14:      #14bdff
+
+! white
+*.color7:       #eeeeec
+*.color15:      #ffffff
