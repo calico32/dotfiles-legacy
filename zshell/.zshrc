@@ -1,12 +1,12 @@
 # colors
 bold=$(tput bold)
 normal=$(tput sgr0)
-red=$fg_no_bold[red]
-green=$fg_no_bold[green]
-magenta=$fg_no_bold[magenta]
-yellow=$fg_no_bold[yellow]
-blue=$fg_no_bold[blue]
-cyan=$fg_no_bold[cyan]
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+yellow=$(tput setaf 3)
+blue=$(tput setaf 4)
+magenta=$(tput setaf 5)
+cyan=$(tput setaf 6)
 
 # ====================================================================
 # env
@@ -29,10 +29,6 @@ export PATH
 export ANDROID_HOME="$HOME/.android-sdk"
 export GOPATH="$HOME/.go"
 
-# terminus font if on VT
-# better to add to /etc/mkinitcpio.conf though
-#if {tty | grep tty 1>/dev/null 2>&1}; then setfont /usr/share/kbd/consolefonts/ter-v16n.psf.gz; fi
-
 # ====================================================================
 # ohmyzsh
 
@@ -42,15 +38,18 @@ ZSH_THEME="wiisportsresorts"
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(
-  git
-  zsh-nvm
-  flutter
+  # git
+  # zsh-nvm # better: load nvm from sandboxd
+  # flutter
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
 
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
+
+# sandboxd (lazy-load nvm)
+source $HOME/.sandboxd
 
 # ====================================================================
 # plugin config
@@ -109,7 +108,7 @@ pacr () {
 
 # sometimes clearing this stops 403 for mpsyt
 mpsyt-clear-cache () {
-  rm "$HOME/.config/mps-youtube/cache_py_3.*"
+  rm $HOME/.config/mps-youtube/cache_py_3.*
 }
 
 # clone and install a package from the AUR
