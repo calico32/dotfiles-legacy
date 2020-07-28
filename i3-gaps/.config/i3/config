@@ -220,6 +220,12 @@ bindsym $mod+Shift+8 $mv to $ws $ws8
 bindsym $mod+Shift+9 $mv to $ws $ws9
 bindsym $mod+Shift+0 $mv to $ws $ws10
 
+# place apps on certain workspaces
+assign [class="firefoxdeveloperedition"] $ws1
+assign [class="discord"] $ws3
+assign [class="cantata"] $ws4
+assign [class="google play music desktop player"] $ws4
+
 
 
 ###################
