@@ -6,7 +6,7 @@ TMPICON=/tmp/lock-icon.png
 sleep 1
 
 cp $ICON $TMPICON
-convert $TMPICON -scale 60% $TMPICON
+convert $TMPICON -strip -scale 60% $TMPICON
 
 scrot /tmp/screen.png
 convert $TMPBG -scale 10% -scale 1000% $TMPBG
