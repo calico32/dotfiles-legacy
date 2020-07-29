@@ -56,8 +56,7 @@ source $HOME/.sandboxd
 
 # Custom colors
 typeset -A ZSH_HIGHLIGHT_STYLES
-
-ZSH_HIGHLIGHT_STYLES[arg0]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[arg0]="fg=blue"
 ZSH_HIGHLIGHT_STYLES[single-hyphen-option]="fg=green"
 ZSH_HIGHLIGHT_STYLES[double-hyphen-option]="fg=green"
 
@@ -76,46 +75,36 @@ hash -d ushare=/usr/share
 aur=$HOME/downloads/aur
 hash -d aur=$aur
 
-alias ffdev="firefox-developer-edition"
-alias vsc="code-insiders"
-alias copy="xclip -selection c"
-alias ptc="picom-trans -c"
-alias pt="picom-trans"
 alias setbg="feh --bg-fill"
 alias nautilus="nautilus --no-desktop"
 
 # ====================================================================
 # functions
+# functions instead of aliases because zsh -c doesn't see aliases
 
 # mkdir and cd at the same time
-mkcd () {
-  mkdir -p -- "$1" && cd -P -- "$1"
-}
+mkcd() { mkdir -p -- "$1" && cd -P -- "$1"; }
 
-brightness () {
-  xrandr --output $(xrandr | grep " connected" | cut -f1 -d " ") --brightness $1
-}
+brightness() { xrandr --output $(xrandr | grep " connected" | cut -f1 -d " ") --brightness $1; }
 
-gogh () {
-  bash -c "$(wget -qO- https://git.io/vQgMr)"
-}
+gogh() { bash -c "$(wget -qO- https://git.io/vQgMr)"; }
 
-pacs () {
-  sudo pacman -S "$@"
-}
+pacs() { sudo pacman -S $@; }
+pacr() { sudo pacman -R $@; }
 
-pacr () {
-  sudo pacman -R "$@"
-}
+ptc() { picom-trans -c $@; }
+pt() { picom-trans $@; }
+
+vsc() { code-insiders $@; }
+ffdev() { firefox-developer-edition $@; }
+copy() { xclip -selection c; }
 
 # sometimes clearing this stops 403 for mpsyt
-mpsyt-clear-cache () {
-  rm $HOME/.config/mps-youtube/cache_py_3.*
-}
+mpsyt-clear-cache() { rm "$HOME/.config/mps-youtube/cache_py_3.*"; }
 
 # clone and install a package from the AUR
-aurdl () {
-  pushd $aur > /dev/null
+aurdl() {
+  pushd $aur >/dev/null
   if [[ -d $1 ]]; then
     response=$(bash -c "read -n1 -rp \"${yellow}${bold}Directory $1 already exists in $aur, remove it? [Y/n] ${normal}\" c; echo \$c")
     echo
@@ -130,17 +119,17 @@ aurdl () {
   echo "${blue}${bold}Cloning $1...${normal}"
   git clone "https://aur.archlinux.org/$1.git"
   if [[ $? -eq 0 ]]; then
-    pushd $1 > /dev/null
+    pushd $1 >/dev/null
     echo "${blue}${bold}Running makepkg -si...${normal}"
     makepkg -si
-    popd > /dev/null
+    popd >/dev/null
   else
     echo "${red}${bold}Problem cloning $1, see above.${normal}"
   fi
-  popd > /dev/null
+  popd >/dev/null
 }
 
-reload-gtk-theme () {
+reload-gtk-theme() {
   theme=$(gsettings get org.gnome.desktop.interface gtk-theme)
   gsettings set org.gnome.desktop.interface gtk-theme ''
   sleep 1
