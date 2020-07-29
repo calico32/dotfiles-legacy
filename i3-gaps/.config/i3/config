@@ -104,14 +104,9 @@ bindsym $mod+Shift+q kill
 
 bindsym $mod+Return exec "gnome-terminal"
 
-set $rofitheme -theme Pop-Dark -padding 5 -bw 0 -show-icons true -hide-scrollbar true -font \\"Fira Code 12\\"
-
-bindsym $mod+d exec --no-startup-id "rofi -show combi -modi \\"drun,ssh,combi\\" -combi-modi \\"drun,ssh\\" -display-combi \\"rofi\\" -combi-display-format \\"{name}\\" $rofitheme"
-
-
-bindsym $mod+Shift+d exec --no-startup-id "rofi -show drun -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"' -lines 0 -display-drun \\"exec\\" $rofitheme"
-
-bindsym $mod+Mod1+d exec --no-startup-id "rofi -show emoji -modi emoji $rofitheme"
+bindsym $mod+d exec --no-startup-id "$HOME/.local/bin/rofi-open applications"
+bindsym $mod+Shift+d exec --no-startup-id "$HOME/.local/bin/rofi-open command"
+bindsym $mod+Mod1+d exec --no-startup-id "$HOME/.local/bin/rofi-open emoji"
 
 
 
@@ -219,6 +214,12 @@ bindsym $mod+Shift+7 $mv to $ws $ws7
 bindsym $mod+Shift+8 $mv to $ws $ws8
 bindsym $mod+Shift+9 $mv to $ws $ws9
 bindsym $mod+Shift+0 $mv to $ws $ws10
+
+# place apps on certain workspaces
+assign [class="firefoxdeveloperedition"] $ws1
+assign [class="discord"] $ws3
+assign [class="cantata"] $ws4
+assign [class="google play music desktop player"] $ws4
 
 
 
