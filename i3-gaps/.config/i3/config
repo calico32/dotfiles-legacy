@@ -17,7 +17,10 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit i3 (logs out of X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Really exit i3?' -B 'Exit i3' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Really exit i3?' -B 'Exit i3' 'i3-msg exit'"
+
+# Show Plasma exit menu
+bindsym $mod+Shift+e exec --no-startup-id "qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1"
 
 
 
@@ -50,7 +53,7 @@ bindsym --release button2 kill
 
 # initial gaps
 gaps inner 15
-gaps bottom 28
+gaps bottom 0
 
 # gap adjustment
 bindsym $mod+minus gaps inner all plus 5
@@ -59,8 +62,8 @@ bindsym $mod+Shift+minus gaps outer all plus 5
 bindsym $mod+Shift+equal gaps outer all minus 5
 
 # show/hide polybar
-bindsym $mod+Shift+p exec "polybar-msg cmd hide" gaps bottom all set 0
-bindsym $mod+p exec "polybar-msg cmd show" gaps bottom all set 28
+# bindsym $mod+Shift+p exec "polybar-msg cmd hide" gaps bottom all set 0
+# bindsym $mod+p exec "polybar-msg cmd show" gaps bottom all set 28
 
 
 
@@ -102,7 +105,7 @@ bindsym $mod+Shift+q kill
 # programs #
 ############
 
-bindsym $mod+Return exec "gnome-terminal"
+bindsym $mod+Return exec "konsole"
 
 bindsym $mod+d exec --no-startup-id "$HOME/.local/bin/rofi-open applications"
 bindsym $mod+Shift+d exec --no-startup-id "$HOME/.local/bin/rofi-open command"
@@ -262,7 +265,7 @@ bindsym $mod+r mode "resize"
 exec $HOME/.fehbg
 
 # Start polybar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Start picom
 exec --no-startup-id picom -b
@@ -276,19 +279,21 @@ exec flameshot
 # Start mpd
 exec --no-startup-id mpd
 
+# Plasma things
+exec --no-startup-id wmctrl -c Plasma
 
-# Do GNOME things
-exec --no-startup-id /usr/lib/gsd-xsettings
-# exec_always --no-startup-id gnome-power-manager
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-# exec --no-startup-id gnome-flashback
-# exec --no-startup-id /usr/bin/gnome-screensaver
+for_window [title="Desktop — Plasma"] kill; floating enable; border none
+for_window [class="plasmashell"] floating enable;
+for_window [class="Plasma"] floating enable; border none
+for_window [title="plasma-desktop"] floating enable; border none
+for_window [title="win7"] floating enable; border none
+for_window [class="krunner"] floating enable; border none
+for_window [class="Kmix"] floating enable; border none
+for_window [class="Klipper"] floating enable; border none
+for_window [class="Plasmoidviewer"] floating enable; border none
+for_window [class="(?i)*nextcloud*"] floating disable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
 
-exec --no-startup-id dbus-send \
-    --session \
-    --print-reply=literal \
-    --dest=org.gnome.SessionManager \
-    "/org/gnome/SessionManager" \
-    org.gnome.SessionManager.RegisterClient \
-    "string:i3" \
-    "string:$DESKTOP_AUTOSTART_ID"
+for_window [class="plasmashell" window_type="notification"] border none, move right 700px, move down 450px
+no_focus [class="plasmashell" window_type="notification"]
