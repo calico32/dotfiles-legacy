@@ -2,38 +2,38 @@
 ! import at https://terminal.sexy to get themes for gnome-terminal, guake, etc.
 
 ! special
-*.foreground:   #e3d7d7
+*.foreground:   #282C34
 *.background:   #222222
 *.cursorColor:  #e3d7d7
 
 ! black
-*.color0:       #353535
-*.color8:       #787878
+*.color0:       #282C34
+*.color8:       #5A6374
 
 ! red
-*.color1:       #d25252
-*.color9:       #ff3131
+*.color1:       #E06C75
+*.color9:       #E06C75
 
 ! green
-*.color2:       #a5c261
-*.color10:      #d5ff68
+*.color2:       #98C379
+*.color10:      #98C379
 
 ! yellow
-*.color3:       #ffc66d
-*.color11:      #ffe34c
+*.color3:       #E5C07B
+*.color11:      #E5C07B
 
 ! blue
-*.color4:       #6c99bb
-*.color12:      #4094d4
+*.color4:       #61AFEF
+*.color12:      #61AFEF
 
 ! magenta
-*.color5:       #d197d9
-*.color13:      #e475f3
+*.color5:       #C678DD
+*.color13:      #C678DD
 
 ! cyan
-*.color6:       #6ad5ff
-*.color14:      #14bdff
+*.color6:       #56B6C2
+*.color14:      #56B6C2
 
 ! white
-*.color7:       #eeeeec
-*.color15:      #ffffff
+*.color7:       #DCDFE4
+*.color15:      #DCDFE4
