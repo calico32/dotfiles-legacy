@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # colors
 bold=$(tput bold)
 normal=$(tput sgr0)
@@ -21,6 +28,7 @@ path=(
   "$HOME/.android/sdk/platform-tools"
   "$HOME/.go/bin"
   "/usr/local/go/bin"
+  "/mnt/c/Users/main/AppData/Local/Programs/Microsoft VS Code Insiders/bin"
   $path
 )
 
@@ -34,22 +42,19 @@ export GOPATH="$HOME/.go"
 
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="wiisportsresorts"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(
-  # git
-  # zsh-nvm # better: load nvm from sandboxd
-  # flutter
+  git
+  zsh-nvm
+  flutter
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
 
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
-
-# sandboxd (lazy-load nvm)
-source $HOME/.sandboxd
 
 # ====================================================================
 # plugin config
@@ -129,9 +134,32 @@ aurdl() {
   popd >/dev/null
 }
 
-reload-gtk-theme() {
-  theme=$(gsettings get org.gnome.desktop.interface gtk-theme)
-  gsettings set org.gnome.desktop.interface gtk-theme ''
-  sleep 1
-  gsettings set org.gnome.desktop.interface gtk-theme $theme
+n () {
+  # Block nesting of nnn in subshells
+  if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+    echo "nnn is already running"
+    return
+  fi
+
+  # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
+  # To cd on quit only on ^G, remove the "export" as in:
+  #     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+  # NOTE: NNN_TMPFILE is fixed, should not be modified
+  export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+  # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
+  # stty start undef
+  # stty stop undef
+  # stty lwrap undef
+  # stty lnext undef
+
+  nnn "$@"
+
+  if [ -f "$NNN_TMPFILE" ]; then
+    . "$NNN_TMPFILE"
+    rm -f "$NNN_TMPFILE" > /dev/null
+  fi
 }
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

@@ -1,8 +1,0 @@
-sandbox_init_nvm() {
-  source $ZSH_CUSTOM/plugins/zsh-nvm/zsh-nvm.plugin.zsh
-}
-
-# create hooks for commands (when node/npm/pnpm is called, sandbox nvm)
-sandbox_hook nvm node
-sandbox_hook nvm npm
-sandbox_hook nvm pnpm
