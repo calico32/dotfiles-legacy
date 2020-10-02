@@ -5,3 +5,6 @@ polybar/.config/polybar/logs/*.log
 polybar/.config/polybar/env.sh
 
 pulse/.config/pulse/cookie
+fonts/.local/share/fonts/.uuid
+
+.env
