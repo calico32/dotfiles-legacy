@@ -1,30 +1,36 @@
 #!/bin/bash
 
-rofitheme='-theme Pop-Dark -padding 5 -bw 0 -show-icons true -hide-scrollbar true'
-
 case "$1" in
 applications)
-  rofi $rofitheme \
+  config="\
     -show drun \
     -modi drun \
-    -display-drun rofi
+    -display-drun rofi"
   ;;
 command)
-  rofi $rofitheme \
+  config="\
     -show drun \
     -modi drun \
-    -run-command "zsh -c --rcs \"source $HOME/.zshrc; {cmd}\"" \
+    -run-command 'zsh -c --rcs \"source $HOME/.zshrc; {cmd}\"' \
     -lines 0 \
     -line-padding 0 \
-    -display-drun exec
+    -display-drun exec"
   ;;
 emoji)
-  rofi $rofitheme \
+  config="\
     -show emoji \
-    -modi emoji
+    -modi emoji"
   ;;
 *)
   echo $"Usage: $0 <applications|command|emoji>"
   exit 1
   ;;
 esac
+
+rofi -theme Pop-Dark \
+  -padding 5 \
+  -bw 0 \
+  -show-icons true \
+  -show-scrollbar true \
+  -font "Fira Code 24" \
+  $config
