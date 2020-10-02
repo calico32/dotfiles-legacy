@@ -47,8 +47,10 @@ COMPLETION_WAITING_DOTS="true"
 
 plugins=(
   git
+  docker
   zsh-nvm
-  flutter
+  history-substring-search
+  zsh-completions
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
