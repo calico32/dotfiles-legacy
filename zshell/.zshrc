@@ -84,6 +84,8 @@ hash -d aur=$aur
 
 alias setbg="feh --bg-fill"
 alias nautilus="nautilus --no-desktop"
+alias yay="yay --nodiffmenu --nocleanmenu --noeditmenu"
+alias mkdirp="mkdir -p"
 
 # ====================================================================
 # functions
