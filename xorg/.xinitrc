@@ -6,25 +6,29 @@ sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
 # merge in defaults and keymaps
-if [ -f $sysresources ]; then
-  xrdb -merge $sysresources
-fi
+[ -f $sysresources ] && xrdb -merge $sysresources
+[ -f $sysmodmap ] && xmodmap $sysmodmap
 
-if [ -f $sysmodmap ]; then
-  xmodmap $sysmodmap
-fi
+[ -f "$userresources" ] && xrdb -merge "$userresources"
+[ -f "$usermodmap" ] && xmodmap "$usermodmap"
 
-if [ -f "$userresources" ]; then
-  xrdb -merge "$userresources"
-fi
+[ -f "/etc/xprofile" ] && . "/etc/xprofile"
+[ -f "$HOME/.xprofile" ] && . "$HOME/.xprofile"
 
-if [ -f "$usermodmap" ]; then
-    xmodmap "$usermodmap"
+[ -f "$HOME/.xsession" ] && . "$HOME/.xsession"
+
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+ for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+  [ -x "$f" ] && . "$f"
+ done
+ unset f
 fi
 
 # start gnome keyring
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
-exec dbus-launch i3-gnome 
-# gnome-session-i3
+# polkit
+/usr/lib/polkit-kde-authentication-agent-1 &
+
+exec openbox

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # get env vars
-source "$HOME/.config/polybar/env.sh"
+. "$HOME/.config/polybar/.env"
 
 # terminate already running bar instances
 killall -q polybar
@@ -10,7 +10,17 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 0.5; done
 
 # logfile
-date=$(date "+%Y-%m-%d_%H:%M:%S")
-logfile="$HOME/.config/polybar/logs/log-$date.log"
+logfolder="$HOME/.cache/polybar/logs"
+mkdir -p $logfolder
 
-polybar main -c "$HOME/.config/polybar/main.ini" > "$logfile" 2>&1 &
+date=$(date "+%Y-%m-%d_%H:%M:%S")
+logfile="$logfolder/log-$date.log"
+
+# config file
+configfile="$HOME/.config/polybar/config.ini"
+
+if [ "$1" == "--no-detatch" ]; then
+  polybar -c "$configfile" main
+else
+  polybar -c "$configfile" main >"$logfile" 2>&1 &
+fi

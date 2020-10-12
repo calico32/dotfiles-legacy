@@ -1,14 +1,10 @@
-#
-#
-# for use with i3-gaps
-#
-#
+# vim: filetype=i3config
 
-# Super key
+# super key
 set $mod Mod4
 
-# Font for window titles
-font pango:Ubuntu Condensed 12
+# font for window titles
+font pango:Fira Sans Condensed 12
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -19,7 +15,7 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs out of X session)
 # bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Really exit i3?' -B 'Exit i3' 'i3-msg exit'"
 
-# Show Plasma exit menu
+# show Plasma exit menu
 bindsym $mod+Shift+e exec --no-startup-id "qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1"
 
 
@@ -52,8 +48,9 @@ bindsym --release button2 kill
 ##################
 
 # initial gaps
-gaps inner 15
-gaps bottom 0
+gaps inner 14
+gaps outer 0
+gaps bottom 37
 
 # gap adjustment
 bindsym $mod+minus gaps inner all plus 5
@@ -79,10 +76,10 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86AudioPlay exec mpc toggle
 bindsym XF86AudioNext exec mpc next
 bindsym XF86AudioPrev exec mpc prev
-bindsym Print exec --no-startup-id "zsh -c \\"/usr/bin/flameshot gui\\""
+bindsym Print exec /usr/bin/flameshot gui
 
-# airplane mode (f12)
-bindsym XF86RFKill exec -- bash -e "rfkill list | grep -q '\byes\b' && rfkill unblock all || rfkill block all"
+# airplane mode
+# bindsym XF86RFKill exec -- bash -e "rfkill list | grep -q '\byes\b' && rfkill unblock all || rfkill block all"
 
 
 
@@ -90,7 +87,7 @@ bindsym XF86RFKill exec -- bash -e "rfkill list | grep -q '\byes\b' && rfkill un
 # mouse config #
 ################
 
-# Use Mouse+$mod to drag floating windows to their wanted position
+# Use Mouse+$mod to drag floating windows
 floating_modifier $mod
 
 # Disable focus on mouse hover
@@ -105,9 +102,9 @@ bindsym $mod+Shift+q kill
 # programs #
 ############
 
-bindsym $mod+Return exec "konsole"
+bindsym $mod+Return exec alacritty
 
-bindsym $mod+d exec --no-startup-id "$HOME/.local/bin/rofi-open applications"
+bindsym $mod+d exec --no-startup-id "$HOME/.local/bin/rofi-open apps"
 bindsym $mod+Shift+d exec --no-startup-id "$HOME/.local/bin/rofi-open command"
 bindsym $mod+Mod1+d exec --no-startup-id "$HOME/.local/bin/rofi-open emoji"
 
@@ -230,30 +227,15 @@ assign [class="google play music desktop player"] $ws4
 # window resizing #
 ###################
 
-set $resizeAmntPx 3
-set $resizeAmntPpt 1
-
-set $resizeAmnt $resizeAmntPx px or $resizeAmntPpt ppt
-
-mode "resize" {
-  bindsym j resize shrink width $resizeAmntPx px or $resizeAmntPpt ppt
-  bindsym k resize grow height $resizeAmntPx px or $resizeAmntPpt ppt
-  bindsym l resize shrink height $resizeAmntPx px or $resizeAmntPpt ppt
-  bindsym semicolon resize grow width $resizeAmntPx px or $resizeAmntPpt ppt
-
-  # arrow keys
-  bindsym Left resize shrink width $resizeAmntPx px or $resizeAmntPpt ppt
-  bindsym Down resize grow height $resizeAmntPx px or $resizeAmntPpt ppt
-  bindsym Up resize shrink height $resizeAmntPx px or $resizeAmntPpt ppt
-  bindsym Right resize grow width $resizeAmntPx px or $resizeAmntPpt ppt
-
-  # exit resize mode
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-  bindsym $mod+r mode "default"
-}
-
-bindsym $mod+r mode "resize"
+# add resize keybindings in place of mode
+bindsym $mod+Control+Left resize shrink width 10 px or 10
+bindsym $mod+Control+Down resize grow height 10 px or 10
+bindsym $mod+Control+Up resize shrink height 10 px or 10
+bindsym $mod+Control+Right resize grow width 10 px or 10
+bindsym $mod+Shift+Control+Left resize shrink width 1 px or 1
+bindsym $mod+Shift+Control+Down resize grow height 1 px or 1
+bindsym $mod+Shift+Control+Up resize shrink height 1 px or 1
+bindsym $mod+Shift+Control+Right resize grow width 1 px or 1
 
 
 
@@ -265,35 +247,23 @@ bindsym $mod+r mode "resize"
 exec $HOME/.fehbg
 
 # Start polybar
-# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Start picom
-exec --no-startup-id picom -b
+exec_always --no-startup-id picom -b
 
 # Start Pulseaudio and effects
 exec --no-startup-id '/usr/bin/pulseaudio --start'
 exec --no-startup-id pulseeffects --gapplication-service
 
+# dunst
+exec --no-startup-id dunst
+
+# flameshot
 exec flameshot
 
-# Start mpd
+# networkmanager
+exec --no-startup-id nm-applet
+
+# mpd
 exec --no-startup-id mpd
-
-# Plasma things
-exec --no-startup-id wmctrl -c Plasma
-
-for_window [title="Desktop — Plasma"] kill; floating enable; border none
-for_window [class="plasmashell"] floating enable;
-for_window [class="Plasma"] floating enable; border none
-for_window [title="plasma-desktop"] floating enable; border none
-for_window [title="win7"] floating enable; border none
-for_window [class="krunner"] floating enable; border none
-for_window [class="Kmix"] floating enable; border none
-for_window [class="Klipper"] floating enable; border none
-for_window [class="Plasmoidviewer"] floating enable; border none
-for_window [class="(?i)*nextcloud*"] floating disable
-for_window [window_role="pop-up"] floating enable
-for_window [window_role="task_dialog"] floating enable
-
-for_window [class="plasmashell" window_type="notification"] border none, move right 700px, move down 450px
-no_focus [class="plasmashell" window_type="notification"]

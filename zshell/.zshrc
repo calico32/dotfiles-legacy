@@ -57,6 +57,7 @@ plugins=(
 
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
+_comp_options+=(globdots)
 
 # ====================================================================
 # plugin config
@@ -167,3 +168,5 @@ n () {
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# find $HOME/.config/mps-youtube -type f -regextype posix-extended -iregex '.*.(.?)$' -delete
