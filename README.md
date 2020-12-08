@@ -1,3 +1,10 @@
+Legacy dotfiles in this repo (pre 12/2020). New dotfiles at [wiisportsresort/dotfiles](https://github.com/wiisportsresort/dotfiles).
+
+- This setup: i3, polybar, rofi, dunst, zsh (managed with stow)
+- New setup: awesomewm, fish, cleaner home dir (git bare repo)
+
+---
+
 # dotfiles
 
 ## wiisportsresort
@@ -5,12 +12,6 @@
 these are cool
 
 ## installation/usage
-
-if you want wallpapers, initialize submodules:
-
-```
-$ git submodule init
-```
 
 files are organized to be used with GNU Stow (probably the `stow` package on your distribution)
 
