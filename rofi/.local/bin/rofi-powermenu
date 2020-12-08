@@ -7,17 +7,9 @@ if [ -z "$@" ]; then
   echo -en "Reboot\0icon\x1fsystem-restart\n"
 else
   case "$1" in
-  Shutdown)
-    echo -en "Now\n30s\n1m"
-    ;;
-  Exit)
-    i3-msg exit
-    ;;
-  Reboot)
-    sudo reboot
-    ;;
-  Suspend)
-    systemctl suspend
-    ;;
+  Shutdown) systemctl poweroff ;;
+  Logout) i3-msg exit ;;
+  Reboot) reboot ;;
+  Suspend) systemctl suspend ;;
   esac
 fi

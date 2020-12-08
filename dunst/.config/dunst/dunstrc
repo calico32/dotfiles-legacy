@@ -10,7 +10,7 @@
 
   # The geometry of the window
   #   [{width}]x{height}[+/-{x}+/-{y}]
-  geometry = "800x8-23-73"
+  geometry = "0x0-20-76"
 
   # Show how many messages are hidden
   indicate_hidden = yes
@@ -186,11 +186,13 @@
   background = "#1e2137fa"
   foreground = "#ffffffff"
   timeout = 8
+  icon = ~/.config/dunst/normal.png
 
 [urgency_normal]
   background = "#1e2137fa"
   foreground = "#ffffffff"
   timeout = 8
+  icon = ~/.config/dunst/normal.png
 
 [urgency_critical]
   background = "#dd130ddd"

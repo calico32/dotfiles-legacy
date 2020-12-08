@@ -2,7 +2,7 @@ configuration {
   modi: "window,run,drun";
   theme: "clean";
   show-icons: true;
-  font: "Hack 11";
+  font: "Fira Code 18";
 }
 
 @import "colors.rasi"
@@ -27,7 +27,7 @@ configuration {
 
 #listview {
   padding: 20px;
-  columns: 5;
+  columns: 4;
   spacing: 4px;
   cycle: false;
   dynamic: true;
@@ -44,12 +44,14 @@ element {
 
 element-icon {
   size: 80px;
-  margin: 0 10px 0 0;
+  margin: 0 0 0 0;
+  horizontal-align: 0;
+
 }
 
 element-text {
-  horizontal-align: 0.5;
-  vertical-align: 0.5;
+  horizontal-align: 0;
+  vertical-align: 0;
 }
 
 #element.normal.normal {

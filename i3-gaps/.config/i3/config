@@ -1,10 +1,11 @@
+#!/bin/sh
 # vim: filetype=i3config
 
 # super key
 set $mod Mod4
 
 # font for window titles
-font pango:Fira Sans Condensed 12
+font pango:Fira Sans Condensed 10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -13,44 +14,37 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit i3 (logs out of X session)
-# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Really exit i3?' -B 'Exit i3' 'i3-msg exit'"
-
-# show Plasma exit menu
-bindsym $mod+Shift+e exec --no-startup-id "qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1"
-
-
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Really exit i3?' -B 'Exit i3' 'i3-msg exit'"
 
 #########################
 # window borders/titles #
 #########################
 
-# disable borders
-for_window [class=".*"] border pixel 0
+# borders
+for_window [class=".*"] border pixel 3
 hide_edge_borders smart
 
 for_window [class=".*"] title_format " <span size=\\"smaller\\">%title</span>"
 
-# class                 border  backgr. text    indicator child_border
-client.focused          #103860 #103860 #ffffff #2e9ef4   #285577
-client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-client.background       #ffffff
+# class                 border  bground text    indicator child_border
+client.focused          #4C7899 #285577 #FFFFFF #2E9EF4   #285577
+client.focused_inactive #333333 #5F676A #FFFFFF #484E50   #5F676A
+client.unfocused        #333333 #222222 #888888 #292D2E   #222222
+client.urgent           #2F343A #900000 #FFFFFF #900000   #900000
+client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
 
-# middle click on titlebar kills window
+client.background       #FFFFFF
+
 bindsym --release button2 kill
-
-
 
 ##################
 # gaps gaps gaps #
 ##################
 
 # initial gaps
-gaps inner 14
+gaps inner 13
 gaps outer 0
-gaps bottom 37
+gaps bottom 41
 
 # gap adjustment
 bindsym $mod+minus gaps inner all plus 5
@@ -62,8 +56,6 @@ bindsym $mod+Shift+equal gaps outer all minus 5
 # bindsym $mod+Shift+p exec "polybar-msg cmd hide" gaps bottom all set 0
 # bindsym $mod+p exec "polybar-msg cmd show" gaps bottom all set 28
 
-
-
 ############
 # keyboard #
 ############
@@ -73,15 +65,13 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86AudioPlay exec mpc toggle
-bindsym XF86AudioNext exec mpc next
-bindsym XF86AudioPrev exec mpc prev
-bindsym Print exec /usr/bin/flameshot gui
+bindsym XF86AudioPlay exec --no-startup-id mpc toggle
+bindsym XF86AudioNext exec --np-startup-id mpc next
+bindsym XF86AudioPrev exec --no-startup-id mpc prev
+bindsym Print exec --no-startup-id flameshot gui
 
 # airplane mode
 # bindsym XF86RFKill exec -- bash -e "rfkill list | grep -q '\byes\b' && rfkill unblock all || rfkill block all"
-
-
 
 ################
 # mouse config #
@@ -90,25 +80,21 @@ bindsym Print exec /usr/bin/flameshot gui
 # Use Mouse+$mod to drag floating windows
 floating_modifier $mod
 
-# Disable focus on mouse hover
-focus_follows_mouse no
+# focus follows mouse
+focus_follows_mouse yes
 
 # kill focused window
 bindsym $mod+Shift+q kill
-
-
 
 ############
 # programs #
 ############
 
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec --no-startup-id alacritty
 
-bindsym $mod+d exec --no-startup-id "$HOME/.local/bin/rofi-open apps"
+bindsym $mod+d exec --no-startup-id "bash -c 'cd $HOME/.config/rofi/scripts && ./launcher.sh'"
 bindsym $mod+Shift+d exec --no-startup-id "$HOME/.local/bin/rofi-open command"
 bindsym $mod+Mod1+d exec --no-startup-id "$HOME/.local/bin/rofi-open emoji"
-
-
 
 ################
 # window focus #
@@ -134,8 +120,6 @@ bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
-
-
 
 ###################
 # window movement #
@@ -171,7 +155,6 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 bindsym $mod+Shift+s sticky toggle
-
 
 ##############
 # workspaces #
@@ -221,49 +204,32 @@ assign [class="discord"] $ws3
 assign [class="cantata"] $ws4
 assign [class="google play music desktop player"] $ws4
 
-
-
 ###################
 # window resizing #
 ###################
 
 # add resize keybindings in place of mode
-bindsym $mod+Control+Left resize shrink width 10 px or 10
-bindsym $mod+Control+Down resize grow height 10 px or 10
-bindsym $mod+Control+Up resize shrink height 10 px or 10
-bindsym $mod+Control+Right resize grow width 10 px or 10
+bindsym $mod+Control+Left resize shrink width 5 px or 5
+bindsym $mod+Control+Down resize grow height 5 px or 5
+bindsym $mod+Control+Up resize shrink height 5 px or 5
+bindsym $mod+Control+Right resize grow width 5 px or 5
 bindsym $mod+Shift+Control+Left resize shrink width 1 px or 1
 bindsym $mod+Shift+Control+Down resize grow height 1 px or 1
 bindsym $mod+Shift+Control+Up resize shrink height 1 px or 1
 bindsym $mod+Shift+Control+Right resize grow width 1 px or 1
 
-
-
 #############
 # processes #
 #############
 
-# Set background with feh
-exec $HOME/.fehbg
-
-# Start polybar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
-# Start picom
-exec_always --no-startup-id picom -b
-
-# Start Pulseaudio and effects
-exec --no-startup-id '/usr/bin/pulseaudio --start'
-exec --no-startup-id pulseeffects --gapplication-service
-
-# dunst
+exec_always --no-startup-id $HOME/.fehbg
+# exec_always --no-startup-id picom -b
+exec --no-startup-id "bash -c 'sleep 2 && pulseaudio -k && sleep 1 && pulseaudio -D'"
+# exec --no-startup-id pulseeffects --gapplication-service
 exec --no-startup-id dunst
-
-# flameshot
-exec flameshot
-
-# networkmanager
+exec --no-startup-id flameshot
 exec --no-startup-id nm-applet
-
-# mpd
 exec --no-startup-id mpd
+#exec --no-startup-id keepassxc
+exec --no-startup-id "bash -c 'sleep 15 && nextcloud'"
+exec_always --no-startup-id "bash -c 'sleep 4 && $HOME/.config/polybar/launch.sh'"

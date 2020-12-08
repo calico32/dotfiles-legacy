@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # get env vars
-. "$HOME/.config/polybar/.env"
+[ -f "$HOME/.config/polybar/.env" ] && . "$HOME/.config/polybar/.env"
 
 # terminate already running bar instances
 killall -q polybar

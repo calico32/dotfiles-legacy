@@ -5,35 +5,20 @@ apps)
   rofi -show drun -theme clean
   ;;
 command)
-  config="\
+  rofi \
+    -bw -1 \
+    -font "Fira Code 18" \
     -show drun \
     -modi drun \
-    -run-command 'zsh -c --rcs \"source $HOME/.zshrc; {cmd}\"' \
-    -lines 0 \
-    -line-padding 0 \
-    -display-drun exec"
-  rofi -theme Pop-Dark \
-    -padding 14 \
-    -bw -1 \
-    -show-icons true \
-    -show-scrollbar true \
-    -font "Fira Code 12" \
-    $config
+    -run-shell-command "{terminal} -e \"{cmd}\"" \
+    -lines 10 \
+    -display-drun exec
   ;;
 emoji)
-  config="\
+  rofi -no-lazy-grab \
+    -modi emoji \
     -show emoji \
-    -modi emoji"
-  rofi -theme Pop-Dark \
-    -padding 14 \
-    -bw -1 \
-    -show-icons true \
-    -show-scrollbar true \
-    -font "Fira Code 12" \
-    $config
-  ;;
-music)
-  rofi -modi 'Music:~/.local/bin/rofi-music' -show Music -theme music
+    -theme ~/.config/rofi/scripts/launchers-git/kde_krunner.rasi
   ;;
 powermenu)
   rofi -modi 'Powermenu:~/.local/bin/rofi-powermenu' -show Powermenu -theme powermenu
